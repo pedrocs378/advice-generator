@@ -4,12 +4,18 @@ export const theme = extendTheme({
   styles: {
     global: {
       'html, body': {
-        background: 'blue.900',
-        color: 'cyan.200'
+        // background: 'blue.900',
+        // color: 'cyan.200'
       }
     }
   },
+  config: {
+    initialColorMode: 'dark',
+  },
   colors: {
+    gray: {
+      '100': '#f9f9f9'
+    },
     blue: {
       '500': '#313A49',
       '900': '#202632'
@@ -18,7 +24,8 @@ export const theme = extendTheme({
       '200': 'hsl(193, 38%, 86%)'
     },
     green: {
-      '500': 'hsl(150, 100%, 66%)'
+      '500': 'hsl(150, 100%, 66%)',
+      '600': 'hsl(150, 100%, 45%)',
     }
   },
   fonts: {
