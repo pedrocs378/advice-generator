@@ -2,9 +2,11 @@ import {
   IconButton,
   Text,
   VStack,
-  useTheme,
   Skeleton,
-  useColorModeValue
+  useColorModeValue,
+  Alert,
+  AlertIcon,
+  theme
 } from '@chakra-ui/react'
 
 import { useApiGenerateAdvice } from '../hooks/use-api-generate-advice'
@@ -13,7 +15,6 @@ import { DiceIcon } from './DiceIcon'
 import { Divider } from './Divider'
 
 export function AdviceCard() {
-  const theme = useTheme()
   const bgCard = useColorModeValue('white', 'blue.500')
   const colorCard = useColorModeValue('blue.900', 'cyan.200')
   const highlighColor = useColorModeValue('green.600', 'green.500')
@@ -34,9 +35,10 @@ export function AdviceCard() {
   return (
     <>
       {error && (
-        <Text color="red.500" mb="4">
+        <Alert status="error" variant="solid" mb="4" borderRadius="md" maxW="540px">
+          <AlertIcon />
           Oops! ocorreu algum erro
-        </Text>
+        </Alert>
       )}
       <VStack
         w="100%"
@@ -50,7 +52,7 @@ export function AdviceCard() {
         py="7"
         boxShadow={boxShadow}
         pos="relative"
-        spacing={theme.space['8']}
+        spacing={theme.space[8]}
       >
         <Skeleton
           fadeDuration={1}
@@ -95,11 +97,11 @@ export function AdviceCard() {
           }}
           _hover={{
             background: highlighColor,
-            boxShadow: `0 0 16px ${theme.colors.green['400']}`
+            boxShadow: `0 0 16px ${theme.colors.green[400]}`
           }}
           borderRadius="full"
           pos="absolute"
-          top={`calc(100% - ${theme.space['6']})`}
+          top={`calc(100% - ${theme.space[6]})`}
           mt="0 !important"
           onClick={handleGenerateNewAdvice}
           isLoading={isLoading || isFetching}
