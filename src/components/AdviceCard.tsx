@@ -1,4 +1,12 @@
-import { IconButton, Image, Text, VStack, useTheme, Skeleton, useColorModeValue } from '@chakra-ui/react'
+import {
+  IconButton,
+  Image,
+  Text,
+  VStack,
+  useTheme,
+  Skeleton,
+  useColorModeValue
+} from '@chakra-ui/react'
 
 import { useApiGenerateAdvice } from '../hooks/use-api-generate-advice'
 
@@ -43,7 +51,12 @@ export function AdviceCard() {
           fadeDuration={1}
           isLoaded={!isLoading}
         >
-          <Text color={highlighColor} letterSpacing="6px" fontSize="xs" textTransform="uppercase">
+          <Text
+            color={highlighColor}
+            letterSpacing="6px"
+            fontSize="xs"
+            textTransform="uppercase"
+          >
             Advice {`#${adviceData?.slip.id}`}
           </Text>
         </Skeleton>
@@ -53,7 +66,12 @@ export function AdviceCard() {
           fadeDuration={1}
           isLoaded={!isLoading}
         >
-          <Text color={colorCard} maxW="95%" fontSize="3xl" textAlign="center">
+          <Text
+            color={colorCard}
+            maxW="95%"
+            fontSize={['xl', '3xl']}
+            textAlign="center"
+          >
             "{adviceData?.slip.advice}"
           </Text>
         </Skeleton>
