@@ -1,6 +1,5 @@
 import {
   IconButton,
-  Image,
   Text,
   VStack,
   useTheme,
@@ -11,8 +10,7 @@ import {
 import { useApiGenerateAdvice } from '../hooks/use-api-generate-advice'
 
 import { DiceIcon } from './DiceIcon'
-
-import divider from '../assets/pattern-divider-desktop.svg'
+import { Divider } from './Divider'
 
 export function AdviceCard() {
   const theme = useTheme()
@@ -21,7 +19,13 @@ export function AdviceCard() {
   const highlighColor = useColorModeValue('green.600', 'green.500')
   const boxShadow = useColorModeValue('md', 'xl')
 
-  const { data: adviceData, isLoading, isFetching, error, refetch } = useApiGenerateAdvice()
+  const {
+    data: adviceData,
+    isLoading,
+    isFetching,
+    error,
+    refetch
+  } = useApiGenerateAdvice()
 
   const handleGenerateNewAdvice = async () => {
     await refetch()
@@ -42,7 +46,8 @@ export function AdviceCard() {
         rounded="lg"
         justify="center"
         align="center"
-        p="6"
+        px="4"
+        py="7"
         boxShadow={boxShadow}
         pos="relative"
         spacing={theme.space['8']}
@@ -54,7 +59,7 @@ export function AdviceCard() {
           <Text
             color={highlighColor}
             letterSpacing="6px"
-            fontSize="xs"
+            fontSize={['x-small', 'xs']}
             textTransform="uppercase"
           >
             Advice {`#${adviceData?.slip.id}`}
@@ -69,19 +74,20 @@ export function AdviceCard() {
           <Text
             color={colorCard}
             maxW="95%"
-            fontSize={['xl', '3xl']}
+            fontSize={['2xl', '3xl']}
             textAlign="center"
           >
             "{adviceData?.slip.advice}"
           </Text>
         </Skeleton>
 
-        <Image src={divider} alt="Divider" />
+        <Divider />
 
         <IconButton
           icon={<DiceIcon />}
           aria-label="Dice"
-          size="lg"
+          height={['14', '12']}
+          minW={['14', '12']}
           bg={highlighColor}
           _active={{
             filter: 'brightness(0.9)',
