@@ -10,9 +10,15 @@ type Advice = {
 }
 
 export const useApiGenerateAdvice = () => {
-  return useQuery('generatedAdvice', async () => {
-    const response = await adviceApi.get<Advice>('/advice')
-
-    return response.data
-  })
+  return useQuery(
+    'generatedAdvice',
+    async () => {
+      const response = await adviceApi.get<Advice>('/advice')
+  
+      return response.data
+    },
+    {
+      refetchOnWindowFocus: false
+    }
+  )
 }
