@@ -5,7 +5,6 @@ type DiceIconProps = IconProps
 export function DiceIcon(props: DiceIconProps) {
   return (
     <Icon
-      color="blue.900"
       height={['6', '4']}
       width={['6', '4']}
       xmlns="http://www.w3.org/2000/svg"

@@ -6,19 +6,54 @@ import {
   useColorModeValue,
   Alert,
   AlertIcon,
-  theme
+  theme,
+  IconButtonProps,
+  Flex,
+  useBreakpointValue,
+  useToast
 } from '@chakra-ui/react'
+import { MdSave } from 'react-icons/md'
+import { useMyAdvices } from '../contexts/MyAdvicesContext'
 
 import { useApiGenerateAdvice } from '../hooks/use-api-generate-advice'
 
 import { DiceIcon } from './DiceIcon'
 import { Divider } from './Divider'
 
+type ActionIconButtonProps = IconButtonProps & {
+  highlightColor?: string
+}
+
+function ActionIconButton({ highlightColor, ...rest }: ActionIconButtonProps) {
+  return (
+    <IconButton
+      height={['14', '12']}
+      minW={['14', '12']}
+      color="blue.900"
+      bg={highlightColor}
+      borderRadius="full"
+      _active={{
+        filter: 'brightness(0.9)',
+        background: highlightColor
+      }}
+      _hover={{
+        boxShadow: `0 0 16px ${theme.colors.green[400]}`,
+        background: highlightColor
+      }}
+      {...rest}
+    />
+  )
+}
+
 export function AdviceCard() {
   const bgCard = useColorModeValue('white', 'blue.500')
   const colorCard = useColorModeValue('blue.900', 'cyan.200')
-  const highlighColor = useColorModeValue('green.600', 'green.500')
+  const highlightColor = useColorModeValue('green.600', 'green.500')
   const boxShadow = useColorModeValue('md', 'xl')
+  const saveIconSize = useBreakpointValue({
+    base: theme.sizes[6],
+    md: theme.sizes[4]
+  })
 
   const {
     data: adviceData,
@@ -27,9 +62,28 @@ export function AdviceCard() {
     error,
     refetch
   } = useApiGenerateAdvice()
+  const { addNewAdvice } = useMyAdvices()
+  const toast = useToast()
 
   const handleGenerateNewAdvice = async () => {
     await refetch()
+  }
+  const handleSaveCurrentAdvice = () => {
+    if (!adviceData) {
+      toast({
+        status: 'error',
+        title: 'Error',
+        description: 'Some error ocurred! Please refresh the page.',
+        duration: 5000,
+        isClosable: true
+      })
+      return
+    }
+
+    addNewAdvice({
+      id: adviceData.slip.id,
+      content: adviceData.slip.advice
+    })
   }
 
   return (
@@ -37,12 +91,10 @@ export function AdviceCard() {
       {error && (
         <Alert status="error" variant="solid" mb="4" borderRadius="md" maxW="540px">
           <AlertIcon />
-          Oops! ocorreu algum erro
+          Oops! Some error ocurred
         </Alert>
       )}
       <VStack
-        w="100%"
-        maxW="540px"
         minH="340px"
         bg={bgCard}
         rounded="lg"
@@ -59,7 +111,7 @@ export function AdviceCard() {
           isLoaded={!isLoading}
         >
           <Text
-            color={highlighColor}
+            color={highlightColor}
             letterSpacing="6px"
             fontSize={['x-small', 'xs']}
             textTransform="uppercase"
@@ -85,27 +137,27 @@ export function AdviceCard() {
 
         <Divider />
 
-        <IconButton
-          icon={<DiceIcon />}
-          aria-label="Dice"
-          height={['14', '12']}
-          minW={['14', '12']}
-          bg={highlighColor}
-          _active={{
-            filter: 'brightness(0.9)',
-            background: highlighColor
-          }}
-          _hover={{
-            background: highlighColor,
-            boxShadow: `0 0 16px ${theme.colors.green[400]}`
-          }}
-          borderRadius="full"
+        <Flex
           pos="absolute"
           top={`calc(100% - ${theme.space[6]})`}
           mt="0 !important"
-          onClick={handleGenerateNewAdvice}
-          isLoading={isLoading || isFetching}
-        />
+          align="center"
+          gap="4"
+        >
+          <ActionIconButton
+            icon={<DiceIcon />}
+            aria-label="Dice"
+            highlightColor={highlightColor}
+            onClick={handleGenerateNewAdvice}
+            isLoading={isLoading || isFetching}
+          />
+          <ActionIconButton
+            icon={<MdSave size={saveIconSize} />}
+            aria-label="Save"
+            highlightColor={highlightColor}
+            onClick={handleSaveCurrentAdvice}
+          />
+        </Flex>
       </VStack>
     </>
   )
