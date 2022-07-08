@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { theme, IconButton } from '@chakra-ui/react'
+import { theme, IconButton, Tooltip } from '@chakra-ui/react'
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
 import { IoMdTrash } from 'react-icons/io'
 import { BsEmojiFrown } from 'react-icons/bs'
@@ -76,17 +76,19 @@ export function MyAdvices(): JSX.Element {
         />
       )}
 
-      <IconButton
-        icon={<IoMdTrash size={20} />}
-        aria-label="Trash"
-        position="absolute"
-        top="3"
-        right="3"
-        colorScheme="red"
-        variant="ghost"
-        m="0 !important"
-        onClick={() => handleRemoveAdvice(myAdvices[currentIndex].id)}
-      />
+      <Tooltip label="Remove">
+        <IconButton
+          icon={<IoMdTrash size={20} />}
+          aria-label="Trash"
+          position="absolute"
+          top="3"
+          right="3"
+          colorScheme="red"
+          variant="ghost"
+          m="0 !important"
+          onClick={() => handleRemoveAdvice(myAdvices[currentIndex].id)}
+        />
+      </Tooltip>
     </AdviceCard>
   )
 }

@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import {
   IconButton,
   useColorModeValue,
@@ -7,7 +8,8 @@ import {
   IconButtonProps,
   Flex,
   useBreakpointValue,
-  useToast
+  useToast,
+  Tooltip
 } from '@chakra-ui/react'
 import { MdSave } from 'react-icons/md'
 
@@ -22,29 +24,30 @@ type ActionIconButtonProps = IconButtonProps & {
   highlightColor?: string
 }
 
-function ActionIconButton({
-  highlightColor,
-  ...rest
-}: ActionIconButtonProps): JSX.Element {
-  return (
-    <IconButton
-      height={['14', '12']}
-      minW={['14', '12']}
-      color="blue.900"
-      bg={highlightColor}
-      borderRadius="full"
-      _active={{
-        filter: 'brightness(0.9)',
-        background: highlightColor
-      }}
-      _hover={{
-        boxShadow: `0 0 16px ${theme.colors.green[400]}`,
-        background: highlightColor
-      }}
-      {...rest}
-    />
-  )
-}
+const ActionIconButton = forwardRef<HTMLButtonElement, ActionIconButtonProps>(
+  ({ highlightColor, ...rest }, ref) => {
+    return (
+      <IconButton
+        ref={ref}
+        height={['14', '12']}
+        minW={['14', '12']}
+        color="blue.900"
+        bg={highlightColor}
+        borderRadius="full"
+        _active={{
+          filter: 'brightness(0.9)',
+          background: highlightColor
+        }}
+        _hover={{
+          boxShadow: `0 0 16px ${theme.colors.green[400]}`,
+          background: highlightColor
+        }}
+        {...rest}
+      />
+    )
+  }
+)
+ActionIconButton.displayName = 'ActionIconButton'
 
 export function CurrentAdvice(): JSX.Element {
   const highlightColor = useColorModeValue('green.600', 'green.500')
@@ -111,20 +114,24 @@ export function CurrentAdvice(): JSX.Element {
           align="center"
           gap="4"
         >
-          <ActionIconButton
-            icon={<DiceIcon />}
-            aria-label="Dice"
-            highlightColor={highlightColor}
-            isLoading={isLoading || isFetching}
-            onClick={handleGenerateNewAdvice}
-          />
-          <ActionIconButton
-            icon={<MdSave size={saveIconSize} />}
-            aria-label="Save"
-            highlightColor={highlightColor}
-            isDisabled={!!error || isLoading || isFetching}
-            onClick={handleSaveCurrentAdvice}
-          />
+          <Tooltip label="Roll">
+            <ActionIconButton
+              icon={<DiceIcon />}
+              aria-label="Dice"
+              highlightColor={highlightColor}
+              isLoading={isLoading || isFetching}
+              onClick={handleGenerateNewAdvice}
+            />
+          </Tooltip>
+          <Tooltip label="Save">
+            <ActionIconButton
+              icon={<MdSave size={saveIconSize} />}
+              aria-label="Save"
+              highlightColor={highlightColor}
+              isDisabled={!!error || isLoading || isFetching}
+              onClick={handleSaveCurrentAdvice}
+            />
+          </Tooltip>
         </Flex>
       </AdviceCard>
     </>
