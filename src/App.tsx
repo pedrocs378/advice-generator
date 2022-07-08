@@ -1,5 +1,4 @@
 import {
-  ChakraProvider,
   Center,
   Flex,
   useColorModeValue,
@@ -17,8 +16,6 @@ import { CurrentAdvice } from './components/CurrentAdvice'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { MyAdvices } from './components/MyAdvices'
-
-import { theme } from './styles/theme'
 
 const queryClient = new QueryClient()
 
@@ -44,29 +41,27 @@ function Container({ children }: ContainerProps): JSX.Element {
 
 function App(): JSX.Element {
   return (
-    <ChakraProvider resetCSS theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <MyAdvicesProvider>
-          <Container>
-            <Tabs w="100%" maxW="540px" isFitted>
-              <TabList>
-                <Tab>Advice</Tab>
-                <Tab>My Advices</Tab>
-              </TabList>
+    <QueryClientProvider client={queryClient}>
+      <MyAdvicesProvider>
+        <Container>
+          <Tabs w="100%" maxW="540px" isFitted>
+            <TabList>
+              <Tab>Advice</Tab>
+              <Tab>My Advices</Tab>
+            </TabList>
 
-              <TabPanels>
-                <TabPanel>
-                  <CurrentAdvice />
-                </TabPanel>
-                <TabPanel>
-                  <MyAdvices />
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
-          </Container>
-        </MyAdvicesProvider>
-      </QueryClientProvider>
-    </ChakraProvider>
+            <TabPanels>
+              <TabPanel>
+                <CurrentAdvice />
+              </TabPanel>
+              <TabPanel>
+                <MyAdvices />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Container>
+      </MyAdvicesProvider>
+    </QueryClientProvider>
   )
 }
 

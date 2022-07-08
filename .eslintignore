@@ -1,4 +1,5 @@
 **/*.js
 node_modules
 build
+vite.config.ts
 src/vite-env.d.ts
