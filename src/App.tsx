@@ -13,7 +13,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 
 import { MyAdvicesProvider } from './contexts/MyAdvicesContext'
 
-import { AdviceCard } from './components/AdviceCard'
+import { CurrentAdvice } from './components/CurrentAdvice'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { MyAdvices } from './components/MyAdvices'
@@ -56,7 +56,7 @@ function App() {
 
               <TabPanels>
                 <TabPanel>
-                  <AdviceCard />
+                  <CurrentAdvice />
                 </TabPanel>
                 <TabPanel>
                   <MyAdvices />

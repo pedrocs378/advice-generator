@@ -1,5 +1,5 @@
-import { useToast } from '@chakra-ui/react';
 import { createContext, useCallback, useContext, useMemo } from 'react';
+import { useToast } from '@chakra-ui/react';
 
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
@@ -55,7 +55,7 @@ export function MyAdvicesProvider({ children }: MyAdvicesProviderProps) {
       position: 'top',
       isClosable: true
     })
-  }, [myAdvices])
+  }, [myAdvices, toast])
 
   const removeAdvice = useCallback((adviceId: number) => {
     setMyAdvices((advices) => {
@@ -69,7 +69,7 @@ export function MyAdvicesProvider({ children }: MyAdvicesProviderProps) {
       position: 'top',
       isClosable: true
     })
-  }, [])
+  }, [toast])
 
   const valueMemo: MyAdvicesContextData = useMemo(() => {
     return {
