@@ -47,7 +47,6 @@ export function MyAdvices() {
       handleChangeAdviceIndex('back')
     }
   }
-  console.log(currentIndex)
 
   return (
     <VStack
