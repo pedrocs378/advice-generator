@@ -26,7 +26,7 @@ type ContainerProps = {
   children?: React.ReactNode
 }
 
-function Container({ children }: ContainerProps) {
+function Container({ children }: ContainerProps): JSX.Element {
   const bgColor = useColorModeValue('blackAlpha.100', 'gray.800')
 
   return (
@@ -42,7 +42,7 @@ function Container({ children }: ContainerProps) {
   )
 }
 
-function App() {
+function App(): JSX.Element {
   return (
     <ChakraProvider resetCSS theme={theme}>
       <QueryClientProvider client={queryClient}>
@@ -70,4 +70,4 @@ function App() {
   )
 }
 
-export default App
+export { App }

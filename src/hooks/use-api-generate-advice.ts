@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query'
+import { useQuery, UseQueryResult } from 'react-query'
 
 import { adviceApi } from '../services/adviceApi'
 
@@ -9,12 +9,12 @@ type Advice = {
   }
 }
 
-export const useApiGenerateAdvice = () => {
+export const useApiGenerateAdvice = (): UseQueryResult<Advice> => {
   return useQuery(
     'generatedAdvice',
     async () => {
       const response = await adviceApi.get<Advice>('/advice')
-  
+
       return response.data
     },
     {

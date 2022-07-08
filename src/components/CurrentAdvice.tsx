@@ -22,7 +22,10 @@ type ActionIconButtonProps = IconButtonProps & {
   highlightColor?: string
 }
 
-function ActionIconButton({ highlightColor, ...rest }: ActionIconButtonProps) {
+function ActionIconButton({
+  highlightColor,
+  ...rest
+}: ActionIconButtonProps): JSX.Element {
   return (
     <IconButton
       height={['14', '12']}
@@ -43,7 +46,7 @@ function ActionIconButton({ highlightColor, ...rest }: ActionIconButtonProps) {
   )
 }
 
-export function CurrentAdvice() {
+export function CurrentAdvice(): JSX.Element {
   const highlightColor = useColorModeValue('green.600', 'green.500')
   const saveIconSize = useBreakpointValue({
     base: theme.sizes[6],
@@ -60,10 +63,10 @@ export function CurrentAdvice() {
   const { addNewAdvice } = useMyAdvices()
   const toast = useToast()
 
-  const handleGenerateNewAdvice = async () => {
+  const handleGenerateNewAdvice = async (): Promise<void> => {
     await refetch()
   }
-  const handleSaveCurrentAdvice = () => {
+  const handleSaveCurrentAdvice = (): void => {
     if (!adviceData) {
       toast({
         status: 'error',
@@ -84,7 +87,13 @@ export function CurrentAdvice() {
   return (
     <>
       {error && (
-        <Alert status="error" variant="solid" mb="4" borderRadius="md" maxW="540px">
+        <Alert
+          status="error"
+          variant="solid"
+          mb="4"
+          borderRadius="md"
+          maxW="540px"
+        >
           <AlertIcon />
           Oops! Some error ocurred
         </Alert>

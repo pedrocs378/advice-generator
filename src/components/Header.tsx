@@ -1,7 +1,7 @@
 import { Flex, IconButton, useColorMode } from '@chakra-ui/react'
 import { FaSun, FaMoon } from 'react-icons/fa'
 
-export function Header() {
+export function Header(): JSX.Element {
   const { colorMode, toggleColorMode } = useColorMode()
 
   return (

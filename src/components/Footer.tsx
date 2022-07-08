@@ -1,6 +1,6 @@
-import { Center, Link, Text, useColorModeValue } from '@chakra-ui/react';
+import { Center, Link, Text, useColorModeValue } from '@chakra-ui/react'
 
-export function Footer() {
+export function Footer(): JSX.Element {
   const highlighColor = useColorModeValue('green.600', 'green.500')
 
   return (

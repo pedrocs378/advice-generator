@@ -8,12 +8,12 @@ import { useMyAdvices } from '../contexts/MyAdvicesContext'
 
 import { AdviceCard } from './AdviceCard'
 
-export function MyAdvices() {
+export function MyAdvices(): JSX.Element {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const { myAdvices, removeAdvice } = useMyAdvices()
 
-  function handleChangeAdviceIndex(direction: 'back' | 'forward') {
+  function handleChangeAdviceIndex(direction: 'back' | 'forward'): void {
     if (direction === 'back') {
       setCurrentIndex((index) => {
         if (index <= 0) return index
@@ -29,7 +29,7 @@ export function MyAdvices() {
     }
   }
 
-  function handleRemoveAdvice(adviceId: number) {
+  function handleRemoveAdvice(adviceId: number): void {
     removeAdvice(adviceId)
 
     if (currentIndex === myAdvices.length - 1) {
@@ -40,7 +40,11 @@ export function MyAdvices() {
   return (
     <AdviceCard
       hasErrors={!myAdvices.length}
-      errorMessage={<>No advice saved yet. <BsEmojiFrown size={18} /></>}
+      errorMessage={
+        <>
+          No advice saved yet. <BsEmojiFrown size={18} />
+        </>
+      }
       adviceId={myAdvices[currentIndex]?.id}
       adviceContent={myAdvices[currentIndex]?.content}
     >

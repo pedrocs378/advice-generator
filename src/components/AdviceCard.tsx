@@ -1,4 +1,10 @@
-import { Skeleton, Text, theme, useColorModeValue, VStack } from '@chakra-ui/react'
+import {
+  Skeleton,
+  Text,
+  theme,
+  useColorModeValue,
+  VStack
+} from '@chakra-ui/react'
 
 import { Divider } from './Divider'
 
@@ -18,7 +24,7 @@ export function AdviceCard({
   adviceId,
   adviceContent,
   children
-}: AdviceCardProps) {
+}: AdviceCardProps): JSX.Element {
   const bgCard = useColorModeValue('white', 'blue.500')
   const boxShadow = useColorModeValue('md', 'xl')
   const colorCard = useColorModeValue('blue.900', 'cyan.200')
@@ -50,10 +56,7 @@ export function AdviceCard({
         </Text>
       ) : (
         <>
-          <Skeleton
-            fadeDuration={1}
-            isLoaded={!isLoading}
-          >
+          <Skeleton fadeDuration={1} isLoaded={!isLoading}>
             <Text
               color={highlightColor}
               letterSpacing="6px"
@@ -64,18 +67,14 @@ export function AdviceCard({
             </Text>
           </Skeleton>
 
-          <Skeleton
-            minW="200px"
-            fadeDuration={1}
-            isLoaded={!isLoading}
-          >
+          <Skeleton minW="200px" fadeDuration={1} isLoaded={!isLoading}>
             <Text
               color={colorCard}
               maxW="95%"
               fontSize={['2xl', '3xl']}
               textAlign="center"
             >
-              "{adviceContent ?? '--'}"
+              &quot;{adviceContent ?? '--'}&quot;
             </Text>
           </Skeleton>
 

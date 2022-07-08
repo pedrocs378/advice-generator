@@ -1,7 +1,7 @@
-import { createContext, useCallback, useContext, useMemo } from 'react';
-import { useToast } from '@chakra-ui/react';
+import { createContext, useCallback, useContext, useMemo } from 'react'
+import { useToast } from '@chakra-ui/react'
 
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 type SavedAdvice = {
   id: number
@@ -20,7 +20,9 @@ type MyAdvicesProviderProps = {
 
 const MyAdvicesContexts = createContext({} as MyAdvicesContextData)
 
-export function MyAdvicesProvider({ children }: MyAdvicesProviderProps) {
+export function MyAdvicesProvider({
+  children
+}: MyAdvicesProviderProps): JSX.Element {
   const [myAdvices, setMyAdvices] = useLocalStorage<SavedAdvice[]>(
     '@advGen:myAdvices',
     []
@@ -28,48 +30,54 @@ export function MyAdvicesProvider({ children }: MyAdvicesProviderProps) {
 
   const toast = useToast()
 
-  const addNewAdvice = useCallback((newAdvice: SavedAdvice) => {
-    const isAlreadySaved = myAdvices.some((advice) => {
-      return advice.id === newAdvice.id
-    })
+  const addNewAdvice = useCallback(
+    (newAdvice: SavedAdvice) => {
+      const isAlreadySaved = myAdvices.some((advice) => {
+        return advice.id === newAdvice.id
+      })
 
-    if (isAlreadySaved) {
+      if (isAlreadySaved) {
+        toast({
+          title: 'Error',
+          description: 'This advice is already saved',
+          status: 'error',
+          duration: 5000,
+          position: 'top',
+          isClosable: true
+        })
+
+        return
+      }
+
+      setMyAdvices((advices) => [...advices, newAdvice])
+
       toast({
-        title: 'Error',
-        description: 'This advice is already saved',
-        status: 'error',
+        title: `#${newAdvice.id} Saved`,
+        status: 'success',
         duration: 5000,
         position: 'top',
         isClosable: true
       })
+    },
+    [myAdvices, toast, setMyAdvices]
+  )
 
-      return
-    }
+  const removeAdvice = useCallback(
+    (adviceId: number) => {
+      setMyAdvices((advices) => {
+        return advices.filter((advice) => advice.id !== adviceId)
+      })
 
-    setMyAdvices((advices) => [...advices, newAdvice])
-
-    toast({
-      title: `#${newAdvice.id} Saved`,
-      status: 'success',
-      duration: 5000,
-      position: 'top',
-      isClosable: true
-    })
-  }, [myAdvices, toast])
-
-  const removeAdvice = useCallback((adviceId: number) => {
-    setMyAdvices((advices) => {
-      return advices.filter((advice) => advice.id !== adviceId)
-    })
-
-    toast({
-      title: `#${adviceId} Removed`,
-      status: 'success',
-      duration: 5000,
-      position: 'top',
-      isClosable: true
-    })
-  }, [toast])
+      toast({
+        title: `#${adviceId} Removed`,
+        status: 'success',
+        duration: 5000,
+        position: 'top',
+        isClosable: true
+      })
+    },
+    [toast, setMyAdvices]
+  )
 
   const valueMemo: MyAdvicesContextData = useMemo(() => {
     return {
@@ -86,6 +94,6 @@ export function MyAdvicesProvider({ children }: MyAdvicesProviderProps) {
   )
 }
 
-export function useMyAdvices() {
+export function useMyAdvices(): MyAdvicesContextData {
   return useContext(MyAdvicesContexts)
 }
