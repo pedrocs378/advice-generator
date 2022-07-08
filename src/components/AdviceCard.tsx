@@ -148,13 +148,14 @@ export function AdviceCard() {
             icon={<DiceIcon />}
             aria-label="Dice"
             highlightColor={highlightColor}
-            onClick={handleGenerateNewAdvice}
             isLoading={isLoading || isFetching}
+            onClick={handleGenerateNewAdvice}
           />
           <ActionIconButton
             icon={<MdSave size={saveIconSize} />}
             aria-label="Save"
             highlightColor={highlightColor}
+            isDisabled={!!error || isLoading || isFetching}
             onClick={handleSaveCurrentAdvice}
           />
         </Flex>

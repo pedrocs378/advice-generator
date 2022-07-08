@@ -11,6 +11,7 @@ type SavedAdvice = {
 type MyAdvicesContextData = {
   myAdvices: SavedAdvice[]
   addNewAdvice: (newAdvice: SavedAdvice) => void
+  removeAdvice: (adviceId: number) => void
 }
 
 type MyAdvicesProviderProps = {
@@ -56,12 +57,27 @@ export function MyAdvicesProvider({ children }: MyAdvicesProviderProps) {
     })
   }, [myAdvices])
 
+  const removeAdvice = useCallback((adviceId: number) => {
+    setMyAdvices((advices) => {
+      return advices.filter((advice) => advice.id !== adviceId)
+    })
+
+    toast({
+      title: `#${adviceId} Removed`,
+      status: 'success',
+      duration: 5000,
+      position: 'top',
+      isClosable: true
+    })
+  }, [])
+
   const valueMemo: MyAdvicesContextData = useMemo(() => {
     return {
       myAdvices,
-      addNewAdvice
+      addNewAdvice,
+      removeAdvice
     }
-  }, [myAdvices, addNewAdvice])
+  }, [myAdvices, addNewAdvice, removeAdvice])
 
   return (
     <MyAdvicesContexts.Provider value={valueMemo}>

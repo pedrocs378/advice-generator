@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   Text,
   VStack,
@@ -8,44 +8,16 @@ import {
   IconButton
 } from '@chakra-ui/react'
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
+import { IoMdTrash } from 'react-icons/io'
 import { BsEmojiFrown } from 'react-icons/bs'
 
 import { Divider } from './Divider'
-import { useLocalStorage } from '../hooks/useLocalStorage'
 import { useMyAdvices } from '../contexts/MyAdvicesContext'
-
-type SavedAdvice = {
-  id: number
-  content: string
-}
-
-const advices: SavedAdvice[] = [
-  {
-    id: 162,
-    content: 'Stop using the term "busy" as an excuse.'
-  },
-  {
-    id: 223,
-    content: 'Vinegar is a powerful cleaning agent.'
-  },
-  {
-    id: 204,
-    content: 'The best nights out are when people around you are simply having fun.'
-  },
-  {
-    id: 46,
-    content: "Try going commando to an important meeting, NB: don't wear a skirt."
-  },
-  {
-    id: 199,
-    content: "Be brave. Even if you're not, pretend to be. No one can tell the difference."
-  },
-]
 
 export function MyAdvices() {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const { myAdvices } = useMyAdvices()
+  const { myAdvices, removeAdvice } = useMyAdvices()
 
   const bgCard = useColorModeValue('white', 'blue.500')
   const colorCard = useColorModeValue('blue.900', 'cyan.200')
@@ -67,6 +39,15 @@ export function MyAdvices() {
       })
     }
   }
+
+  function handleRemoveAdvice(adviceId: number) {
+    removeAdvice(adviceId)
+
+    if (currentIndex === myAdvices.length - 1) {
+      handleChangeAdviceIndex('back')
+    }
+  }
+  console.log(currentIndex)
 
   return (
     <VStack
@@ -106,6 +87,18 @@ export function MyAdvices() {
               onClick={() => handleChangeAdviceIndex('back')}
             />
           )}
+
+          <IconButton
+            icon={<IoMdTrash size={20} />}
+            aria-label="Trash"
+            position="absolute"
+            top="3"
+            right="3"
+            colorScheme="red"
+            variant="ghost"
+            m="0 !important"
+            onClick={() => handleRemoveAdvice(myAdvices[currentIndex].id)}
+          />
 
           <Skeleton
             m="0 !important"
