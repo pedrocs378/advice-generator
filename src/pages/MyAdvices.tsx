@@ -6,7 +6,7 @@ import { BsEmojiFrown } from 'react-icons/bs'
 
 import { useMyAdvices } from '../contexts/MyAdvicesContext'
 
-import { AdviceCard } from './AdviceCard'
+import { AdviceCard } from '../components/AdviceCard'
 
 export function MyAdvices(): JSX.Element {
   const [currentIndex, setCurrentIndex] = useState(0)

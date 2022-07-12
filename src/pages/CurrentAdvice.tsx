@@ -17,8 +17,8 @@ import { useMyAdvices } from '../contexts/MyAdvicesContext'
 
 import { useApiGenerateAdvice } from '../hooks/use-api-generate-advice'
 
-import { AdviceCard } from './AdviceCard'
-import { DiceIcon } from './DiceIcon'
+import { AdviceCard } from '../components/AdviceCard'
+import { DiceIcon } from '../components/DiceIcon'
 
 type ActionIconButtonProps = IconButtonProps & {
   highlightColor?: string
