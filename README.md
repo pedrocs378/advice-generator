@@ -6,7 +6,7 @@ https://advice-generator-bice-eight.vercel.app/
 - [Vite](https://vitejs.dev/)
 - [React](https://pt-br.reactjs.org/)
 - [Typescript](https://www.typescriptlang.org/)
-- [Chakra UI](https://chakra-ui.com/)
+- [shadcn.ui](https://ui.shadcn.com/)
 - [Axios](https://axios-http.com/)
 - [React Icons](https://react-icons.github.io/react-icons/)
 - [React Query](https://react-query.tanstack.com/)
