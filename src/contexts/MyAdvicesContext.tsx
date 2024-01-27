@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useMemo } from 'react'
-import { useToast } from '@chakra-ui/react'
+import { toast } from 'sonner'
 
-import { useLocalStorage } from '../hooks/useLocalStorage'
+import { useLocalStorage } from '../hooks/use-local-storage'
 
 type SavedAdvice = {
   id: number
@@ -28,8 +28,6 @@ export function MyAdvicesProvider({
     [],
   )
 
-  const toast = useToast()
-
   const addNewAdvice = useCallback(
     (newAdvice: SavedAdvice) => {
       const isAlreadySaved = myAdvices.some((advice) => {
@@ -37,29 +35,16 @@ export function MyAdvicesProvider({
       })
 
       if (isAlreadySaved) {
-        toast({
-          title: 'Error',
-          description: 'This advice is already saved',
-          status: 'error',
-          duration: 5000,
-          position: 'top',
-          isClosable: true,
-        })
+        toast.error('This advice is already saved')
 
         return
       }
 
       setMyAdvices((advices) => [...advices, newAdvice])
 
-      toast({
-        title: `#${newAdvice.id} Saved`,
-        status: 'success',
-        duration: 5000,
-        position: 'top',
-        isClosable: true,
-      })
+      toast.success(`#${newAdvice.id} Saved`)
     },
-    [myAdvices, toast, setMyAdvices],
+    [myAdvices, setMyAdvices],
   )
 
   const removeAdvice = useCallback(
@@ -68,15 +53,9 @@ export function MyAdvicesProvider({
         return advices.filter((advice) => advice.id !== adviceId)
       })
 
-      toast({
-        title: `#${adviceId} Removed`,
-        status: 'success',
-        duration: 5000,
-        position: 'top',
-        isClosable: true,
-      })
+      toast.success(`#${adviceId} Removed`)
     },
-    [toast, setMyAdvices],
+    [setMyAdvices],
   )
 
   const valueMemo: MyAdvicesContextData = useMemo(() => {

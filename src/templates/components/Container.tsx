@@ -1,24 +1,31 @@
-import { Center, Flex, useColorModeValue } from '@chakra-ui/react'
-
-import { Footer } from '../../components/Footer'
-import { Header } from '../../components/Header'
+import { ThemeToggle } from '@/components/theme/theme-toggle'
 
 type ContainerProps = {
   children?: React.ReactNode
 }
 
 export function Container({ children }: ContainerProps): JSX.Element {
-  const bgColor = useColorModeValue('blackAlpha.100', 'gray.800')
-
   return (
-    <Flex flexDir="column" h="100vh" bgColor={bgColor}>
-      <Header />
+    <div className="relative flex flex-col min-h-screen">
+      <ThemeToggle />
 
-      <Center as="main" flex="1" flexDir="column" px="4">
+      <main className="flex-1 flex flex-co items-center justify-center px-4">
         {children}
-      </Center>
+      </main>
 
-      <Footer />
-    </Flex>
+      <footer className="h-8 flex items-center justify-center">
+        <p className="text-xs">
+          Desenvolvido com ❤️ por{' '}
+          <a
+            href="https://github.com/pedrocs378"
+            rel="noreferrer noopener"
+            target="_parent"
+            className="text-muted-foreground font-semibold hover:underline"
+          >
+            Pedro César
+          </a>
+        </p>
+      </footer>
+    </div>
   )
 }

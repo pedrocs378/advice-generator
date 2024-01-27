@@ -4,14 +4,14 @@ import {
   Route,
 } from 'react-router-dom'
 
-import { AppTemplate } from '../templates/AppTemplate'
+import { AppTemplate } from '../templates/app-template'
 
-import { CurrentAdvice } from '../pages/CurrentAdvice'
-import { MyAdvices } from '../pages/MyAdvices'
+import { Home } from '../pages/home'
+import { MyAdvices } from '../pages/my-advices'
 
 const routes = createRoutesFromElements(
   <Route element={<AppTemplate />}>
-    <Route path="/" element={<CurrentAdvice />} />
+    <Route path="/" element={<Home />} />
     <Route path="/my-advices" element={<MyAdvices />} />
   </Route>,
 )
