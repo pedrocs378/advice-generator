@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { ThemeToggle } from '@/components/theme/theme-toggle'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-export function AppTemplate(): JSX.Element {
+export function AppTemplate() {
   const location = useLocation()
   const navigate = useNavigate()
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight, Trash2 } from 'lucide-react'
 
-import { useMyAdvices } from '../contexts/MyAdvicesContext'
+import { useSavedAdvices } from '@/hooks/use-saved-advices'
 
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
@@ -11,7 +11,7 @@ import { Tooltip } from '@/components/ui/tooltip'
 export function MyAdvices(): JSX.Element {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const { myAdvices, removeAdvice } = useMyAdvices()
+  const { advices, removeAdvice } = useSavedAdvices()
 
   function handleChangeAdviceIndex(direction: 'back' | 'forward'): void {
     if (direction === 'back') {
@@ -22,7 +22,7 @@ export function MyAdvices(): JSX.Element {
       })
     } else {
       setCurrentIndex((index) => {
-        if (index >= myAdvices.length - 1) return index
+        if (index >= advices.length - 1) return index
 
         return index + 1
       })
@@ -32,27 +32,27 @@ export function MyAdvices(): JSX.Element {
   function handleRemoveAdvice(adviceId: number): void {
     removeAdvice(adviceId)
 
-    if (currentIndex === myAdvices.length - 1) {
+    if (currentIndex === advices.length - 1) {
       handleChangeAdviceIndex('back')
     }
   }
 
   return (
     <Card className="relative">
-      {myAdvices.length === 0 && (
+      {advices.length === 0 && (
         <CardContent className="flex items-center justify-center text-muted-foreground min-h-[340px]">
           <span className="text-center">No advices saved yet.</span>
         </CardContent>
       )}
 
-      {myAdvices.length > 0 && (
+      {advices.length > 0 && (
         <>
           <Tooltip label="Remove advice">
             <Button
               className="absolute top-4 right-4 h-8 w-8"
               size="icon"
               variant="destructive"
-              onClick={() => handleRemoveAdvice(myAdvices[currentIndex].id)}
+              onClick={() => handleRemoveAdvice(advices[currentIndex].id)}
             >
               <Trash2 className="h-3 w-3" />
             </Button>
@@ -72,16 +72,16 @@ export function MyAdvices(): JSX.Element {
             )}
 
             <span className="font-mono tracking-widest text-muted-foreground uppercase text-sm">
-              Advice #{myAdvices[currentIndex]?.id}
+              Advice #{advices[currentIndex]?.id}
             </span>
 
             <strong className="text-2xl text-center">
-              &quot;{myAdvices[currentIndex]?.content}&quot;
+              &quot;{advices[currentIndex]?.content}&quot;
             </strong>
 
             <Separator />
 
-            {currentIndex < myAdvices.length - 1 && (
+            {currentIndex < advices.length - 1 && (
               <Tooltip label="Next advice">
                 <Button
                   className="absolute top-1/2 left-full -translate-x-1/2 -translate-y-1/2"

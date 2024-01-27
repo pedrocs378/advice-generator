@@ -1,22 +1,26 @@
+import { useQueryClient } from '@tanstack/react-query'
+import { AlertCircle, Dice5, Save } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { useMyAdvices } from '../contexts/MyAdvicesContext'
-
-import { useApiGenerateAdvice } from '../hooks/use-api-generate-advice'
+import { useSavedAdvices } from '@/hooks/use-saved-advices'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { AlertCircle, Dice5, Save } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 
+import { useRandomAdvice } from '../hooks/use-random-advice'
+
 export function Home() {
-  const { data: advice, isFetching, error, refetch } = useApiGenerateAdvice()
-  const { addNewAdvice } = useMyAdvices()
+  const queryClient = useQueryClient()
+
+  const { advice, isFetching, error } = useRandomAdvice()
+
+  const { saveAdvice } = useSavedAdvices()
 
   const handleGenerateNewAdvice = () => {
-    refetch()
+    queryClient.invalidateQueries({ queryKey: ['random-advice'] })
   }
   const handleSaveCurrentAdvice = () => {
     if (!advice) {
@@ -26,7 +30,7 @@ export function Home() {
       return
     }
 
-    addNewAdvice({
+    saveAdvice({
       id: advice.slip.id,
       content: advice.slip.advice,
     })
@@ -73,6 +77,7 @@ export function Home() {
               size="icon"
               variant="success"
               className="rounded-full"
+              disabled={isFetching}
               onClick={handleGenerateNewAdvice}
             >
               <Dice5 className="h-4 w-4" />
@@ -81,6 +86,7 @@ export function Home() {
               size="icon"
               variant="success"
               className="rounded-full"
+              disabled={isFetching}
               onClick={handleSaveCurrentAdvice}
             >
               <Save className="h-4 w-4" />
