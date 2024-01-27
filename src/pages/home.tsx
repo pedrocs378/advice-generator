@@ -5,8 +5,7 @@ import { toast } from 'sonner'
 import { useSavedAdvices } from '@/hooks/use-saved-advices'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { Card, CardContent } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -46,8 +45,8 @@ export function Home() {
         </Alert>
       )}
 
-      <Card>
-        <CardContent className="px-4 py-7 flex flex-col items-center gap-8 min-h-[340px]">
+      <Card className="min-h-[340px] flex flex-col">
+        <CardContent className="px-4 flex-1 flex flex-col items-center justify-center gap-8">
           {isFetching && (
             <>
               <Skeleton className="w-24 h-4" />
@@ -69,30 +68,28 @@ export function Home() {
               </strong>
             </>
           )}
-
-          <Separator />
-
-          <div className="flex items-center gap-2">
-            <Button
-              size="icon"
-              variant="success"
-              className="rounded-full"
-              disabled={isFetching}
-              onClick={handleGenerateNewAdvice}
-            >
-              <Dice5 className="h-4 w-4" />
-            </Button>
-            <Button
-              size="icon"
-              variant="success"
-              className="rounded-full"
-              disabled={isFetching}
-              onClick={handleSaveCurrentAdvice}
-            >
-              <Save className="h-4 w-4" />
-            </Button>
-          </div>
         </CardContent>
+
+        <CardFooter className="flex items-center justify-center gap-2 pt-6 border-t">
+          <Button
+            size="icon"
+            variant="success"
+            className="rounded-full"
+            disabled={isFetching}
+            onClick={handleGenerateNewAdvice}
+          >
+            <Dice5 className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="success"
+            className="rounded-full"
+            disabled={isFetching}
+            onClick={handleSaveCurrentAdvice}
+          >
+            <Save className="h-4 w-4" />
+          </Button>
+        </CardFooter>
       </Card>
     </>
   )
