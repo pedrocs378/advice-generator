@@ -1,5 +1,4 @@
 # Advice generator app
-https://advice-generator-bice-eight.vercel.app/
 
 ## Tecnologias utilizadas
 
